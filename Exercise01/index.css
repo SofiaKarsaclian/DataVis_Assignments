@@ -1,4 +1,9 @@
 /* TASK 2B): Add a CSS rule which centers the text of all elements in the <div> containing the header elements */
+#header-container h1,
+#header-container h4 {
+    text-align: center;
+}
+
 
 
 
