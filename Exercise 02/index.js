@@ -16,8 +16,30 @@ const margin = { left: 50, right: 20, bottom: 50 };
 
 // Task 1.1: Data Preprocessing
 // This task ensures that all data values are within a logical range.
+
+// When observing the data we observe rates of -1 and rates larger than 100, which do not make sense.
+
+// To deal with these values we substitute them with the county's mean. Although not the most accurate, we do not have other variables on which 
+// we could run a regression on, and still allows us to keep the observations, which, although not crucial for a histogram, may be relevant for other visualizations. 
+
 function preprocessData(data) {
     // Your code here
+
+    // group by county
+    const countyData = d3.group(data, d => d.county);
+    countyData.forEach((entries, county) => {
+    // filter out the values that do not make sense 
+        const validRates = entries.filter(entry => !isNaN(entry.rate) && entry.rate >= 0 && entry.rate <= 100).map(entry => entry.rate);
+    // replace them with county's rate average
+        const meanRate = d3.mean(validRates);
+
+        entries.forEach(entry => {
+            if (isNaN(entry.rate) || entry.rate < 0 || entry.rate > 100) {
+                entry.rate = meanRate;
+            }
+        });
+    });
+    return data;
 }
 
 
@@ -27,6 +49,27 @@ function createHistogram(processedData, numbins) {
     // This subtask groups the data into a specified number of bins based on the unemployment rate.
     // Hint: look at the binning function of d3.bin https://observablehq.com/@d3/d3-bin
     // Your code here
+    const rates = processedData.map(entry => entry.rate);
+    const [minRate, maxRate] = d3.extent(rates);
+
+    console.log('Minimum Rate:', minRate);
+    console.log('Maximum Rate:', maxRate);
+    // 1.6 - 26.4
+
+
+    const xScale = d3.scaleLinear()
+        .domain([minRate, maxRate])
+        .range([0, width]);
+
+    const bins = d3.bin()
+        .domain(xScale.domain())
+        .thresholds(numbins)
+        (rates);
+
+    // Log the bins to verify
+    console.log('Histogram Bins:', bins);
+
+
 
     // Task 2.1: Create Histogram with Equal Width Binning
     // Create a linear x- and y-scale
@@ -51,4 +94,7 @@ function createHistogram(processedData, numbins) {
 
 // Execute the preprocessing and create the histogram
 const processedData = preprocessData(data);
-createHistogram(processedData, 10);
+console.log(processedData)
+
+// We implement X number of bins because... 
+createHistogram(processedData, 20);
