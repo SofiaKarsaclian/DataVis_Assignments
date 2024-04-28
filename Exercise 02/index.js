@@ -72,7 +72,7 @@ function createHistogram(processedData, numbins) {
     // The x-scale maps unemployment rates to pixel values for the width of the histogram.
     // Your code here
     const xScale = d3.scaleLinear()
-        .domain([minRate, maxRate])
+        .domain([0, maxRate + 2]) // for correct display
         .range([margin.left, width - margin.right]);
         
     // The y-scale maps the count of entries in each bin to pixel values for the height of the bars.
@@ -110,7 +110,11 @@ function createHistogram(processedData, numbins) {
     // Rectangles are added or updated based on the data. This subtask also defines the bar dimensions.
     // Your code here
     
-    const barWidth = width / numbins;
+    // to prevent overlapping
+    const barWidth = xScale(bins[0].x1) - xScale(bins[0].x0);
+
+    
+    //const barWidth = width / numbins;
         svg.selectAll("rect")
             .data(bins)
             .enter()
@@ -144,8 +148,7 @@ document.addEventListener("DOMContentLoaded", function() {
     createHistogram(processedData, 25);
 });
 
-// We implement 25 number of bins because... 
-// Choosing 25 bins strikes a balance in displaying the data's distribution pattern while preserving important information about the data.
+// We implement 25 number of bins because it strikes a balance in displaying the data's distribution pattern while preserving important information about the data.
 
 
 // Task 2.1
