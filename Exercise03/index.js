@@ -142,6 +142,7 @@ var lineGeneratorRainfall = d3.line()
     .x(d => xScale(d.Year))
     .y(d => rainScale(d.rain));
 
+
 // TASK: Append two path elements to the 'visualization' group. Set its 'd' attribute respectively using the linegenerators from above
 // Do not forget to set the correct class attributes in order to have the stylesheet applied (.line-temp, .line-rain, .line)
 
@@ -160,8 +161,6 @@ visualization.append("path")
     .style("fill", "none")
     .style("stroke", "blue")
     .style("stroke-width", 2);
-
-
 
 
 
@@ -221,10 +220,16 @@ axisG.append("text")
 // This function gets called when the user presses the "Update Axis" button on the webpage. 
 function updateAxis(){
     // TASK: Update the scales to Logarithmic scales (d3.scaleLog) if they are linear scales (d3.scaleLinear) and vice versa
-    if (tempScale === d3.scaleLinear()) {
+
+    
+    if (tempScale.domain()[0] === 0) {
         // from linear to log
         tempScale = d3.scaleLog()
             .domain([1, d3.max(avgData, d => d.temp)]) 
+            .range([visHeight, 0])
+            .nice();
+        rainScale = d3.scaleLog()
+            .domain([1, d3.max(avgData, d => d.rain)]) 
             .range([visHeight, 0])
             .nice();    
     } else {
@@ -233,15 +238,6 @@ function updateAxis(){
             .domain([0, d3.max(avgData, d => d.temp)])
             .range([visHeight, 0])
             .nice();
-    }
-
-    // Check if the current scale for rainfall is linear
-    if (rainScale === d3.scaleLinear()) {
-        rainScale = d3.scaleLog()
-            .domain([1, d3.max(avgData, d => d.rain)]) 
-            .range([visHeight, 0])
-            .nice();
-    } else {
         rainScale = d3.scaleLinear()
             .domain([0, d3.max(avgData, d => d.rain)]) 
             .range([visHeight, 0])
@@ -249,23 +245,30 @@ function updateAxis(){
     }
 
 
+
     // The following code updates the axis and the circles according to the new scales
-    visualization.selectAll('.c-temp').transition().duration(1000)
-        .attr('cy', d => tempScale(d.temp))
-    
-    visualization.selectAll('.c-rain').transition().duration(1000)
-        .attr('cy', d => rainScale(d.rain))
+     axisG.select('.y-temp').transition().duration(1000)
+        .call(d3.axisLeft(tempScale));
 
-    visualization.select('.line-temp').transition().duration(1000)
-        .attr('d', lineGeneratorTemperature(avgData.map(d => [xScale(d.year), tempScale(d.temp)])))
-
-    visualization.select('.line-rain').transition().duration(1000)
-        .attr('d', lineGeneratorRainfall(avgData.map(d => [xScale(d.year), rainScale(d.rain)])))
-
-    axisG.select('.y-temp').transition().duration(1000)
-        .call(d3.axisLeft(tempScale))
-
+    // Update the rainfall axis
     axisG.select('.y-rain').transition().duration(1000)
         .attr("transform", "translate(" + visWidth + ",0)")
-        .call(d3.axisRight(rainScale))
+        .call(d3.axisRight(rainScale));
+
+    // Update the visual elements according to the new scales
+    visualization.selectAll('.c-temp').transition().duration(1000)
+        .attr('cy', d => tempScale(d.temp));
+    
+    visualization.selectAll('.c-rain').transition().duration(1000)
+        .attr('cy', d => rainScale(d.rain));
+
+    visualization.select('.line-temp').transition().duration(1000)
+        .attr('d', lineGeneratorTemperature(avgData));
+
+    visualization.select('.line-rain').transition().duration(1000)
+        .attr('d', lineGeneratorRainfall(avgData));
 }
+
+
+
+
