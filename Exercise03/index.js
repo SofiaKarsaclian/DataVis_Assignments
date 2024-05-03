@@ -19,7 +19,7 @@ console.log("Raw Data:", data);
 
 
 /* TASK: Retrieve (select) the visualization container node of the div element declared within the index.html by its identifier. */
-
+var container = d3.select("#vis-container")
 
 // Specify margins such that the visualization is clearly visible and no elements are invisible due to the svg border
 var margins = {
@@ -36,21 +36,26 @@ var visWidth = width - margins.left - margins.right;
 var visHeight = height - margins.top - margins.bottom;
 
 /* TASK: Append an svg element to the vis-container, set its width and height (in pixels), add it to the vis-container, and save the element to variable called 'svg' */
+var svg= container.append("svg")
+    .attr("width", width)
+    .attr("height", height)
 
 
 /* TASK: Add a group element to the svg to realize the margin by translating the group, and save the element to variable called 'viewport'. */
-
-
+var viewport = svg.append("g")
+    .attr("transform", "translate(" + margins.left + "," + margins.top + ")");
 
 
 // Data Preparation: For each year we want the average rain and temperature
 // TASK: Use d3.group() to group the data entries by year (see https://github.com/d3/d3-array#group)
-var dataByYears = []
+var dataByYears = d3.group(data, d => d.Year);
+
+
 
 
 
 // TASK: convert the Map dataByYears from d3.group() to an array to iterate over it. Read the documentation (https://github.com/d3/d3-array#group) to see how 
-var dataByYearsArray = []
+var dataByYearsArray =  Array.from(dataByYears);
 
 
 
@@ -61,11 +66,16 @@ var avgData = [];
 
 // TASK: iterate through the data by years and use the d3.mean() function to calculate the mean values of temperature and rainfall for each year
 // Similarly to Ex. 1: Push one object for each year onto the 'avgData' array
+dataByYearsArray.forEach(([year, yearData]) => {
+    var meanTemperature = d3.mean(yearData, d => d.tas);
+    var meanRainfall = d3.mean(yearData, d => d.pr);
 
-
-
-
-
+    avgData.push({
+        Year: year,
+        MeanTemperature: meanTemperature,
+        MeanRainfall: meanRainfall
+    });
+});
 
 
 console.log("Average Data per Year:", avgData);
