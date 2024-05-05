@@ -17,6 +17,26 @@
 
 console.log("Raw Data:", data);
 
+/* Task 1: 
+/* (1)The second one focuses on expressiveness, because it only display the most important information(number of different injuries) without adding any unnecessary information.
+/* The bar chart is super simple and clear to help people detect the difference between different categries of injuries. 
+/* The first one focuses on effectiveness, because it fully convey the information with vivid picture and position also subinformation of each kind of injuries. 
+
+/* (2)What are the different marks and visual variables used in both visualizations?
+/* pic1 visual variables: position, size  ; marks: circle
+/* pic2 visual variables: position, size  ; marks: bar
+
+/* (3)How do the different marks and variables affect the tasks that the visualizations 
+/* pic1: The circles positioned on the human body diagram effectively highlight where each category of injury occurs, making it easy to identify the most frequent injuries. 
+/* However, comparing injuries with similar numbers at first glance can be challenging and requires looking at the labeled numbers on each circle.
+/* pic2: The bar chart offers a clearer comparison between the number of different injury categories by placing bars in descending order. 
+/* This visual arrangement allows for quick and easy comparisons, especially for categories with similar counts.
+
+/* Task 2d 
+/* (1)The scaler number is not equally ditributed in the logarithmic scale. logarithmic scale limites the line chart in a shorter range,the fluatuation is not so large.
+/* (2)Logarithmic scales are useful for data spanning several orders of magnitude, such as when most data points cluster together and a few are much further away. 
+/* A logarithmic scale highlights differences within the clustered data and provides a clearer view of data distribution. 
+/* In contrast, a linear scale might only emphasize the gap between clustered and distant data points, overlooking variations within the cluster.
 
 /* TASK: Retrieve (select) the visualization container node of the div element declared within the index.html by its identifier. */
 var container = d3.select("#vis-container")
@@ -85,24 +105,25 @@ console.log("Average Data per Year:", avgData);
 var xScale = d3.scaleLinear()
     .domain([d3.min(avgData, d => d.Year), d3.max(avgData, d => d.Year)])
     .range([0, visWidth])
-    .nice();
+    ;
 
 var tempScale = d3.scaleLinear()
     .domain([0, d3.max(avgData, d => d.temp)])
-    .range([visHeight, 0])
-    .nice();
+    .range([visHeight- margins.top, 0])
+    ;
 
 var rainScale = d3.scaleLinear()
     .domain([0, d3.max(avgData, d => d.rain)])
-    .range([visHeight, 0])
-    .nice();
+    .range([visHeight- margins.top, 0])
+    ;
 
 
 
 // In order to organize our code, we add another group which will hold all elements (circles and paths) of the visualization
 var visualization = viewport.append("g");
 var circles = visualization.selectAll("circle")
-    .data(avgData).enter();
+    .data(avgData)
+    .enter();
 
 console.log("Entered Data:", circles);
 
@@ -227,21 +248,21 @@ function updateAxis(){
         tempScale = d3.scaleLog()
             .domain([1, d3.max(avgData, d => d.temp)]) 
             .range([visHeight, 0])
-            .nice();
+            ;
         rainScale = d3.scaleLog()
             .domain([1, d3.max(avgData, d => d.rain)]) 
             .range([visHeight, 0])
-            .nice();    
+            ;    
     } else {
         // from log t linear
         tempScale = d3.scaleLinear()
             .domain([0, d3.max(avgData, d => d.temp)])
             .range([visHeight, 0])
-            .nice();
+            ;
         rainScale = d3.scaleLinear()
             .domain([0, d3.max(avgData, d => d.rain)]) 
             .range([visHeight, 0])
-            .nice();
+            ;
     }
 
 
