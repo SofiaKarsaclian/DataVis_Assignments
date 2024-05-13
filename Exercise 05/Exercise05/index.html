@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Exercise 5</title>
+        <link rel="stylesheet" href="index.css">
+        <script type="text/javascript" src="d3.js"></script>
+        <script type="text/javascript" src="index.js"></script>
+        <script type="text/javascript" src="conversion.js"></script>
+  </head>
+
+  <body onload="init()">
+    <div id="Introduction">
+      <h1>Exercise 5: Color Perception</h1>
+      <h4>Contributors: YOUR NAMES</h4>
+    </div>
+
+    <div>
+        <h2>Task 1 (15 points)</h2>
+        <ul>
+            <li><b>a) </b><i>(3/15 points)</i>
+                <p><i>Problem with JND?</i>
+                    <!-- Your answer... --> 
+                </p>
+                <p><i>Consequences?</i>
+                    <!-- Your answer... --> 
+                </p>
+                <p><i>Solution?</i>
+                    <!-- Your answer... --> 
+                </p>
+            </li>
+            
+            <li><b>b) </b><i>(2/15 points)</i>
+                <p><i>Disadvantage of 12-class Set3</i>
+                    <!-- Your answer... --> 
+                </p>
+            </li>
+            <li><b>c) </b><i>(10/15 points)</i>
+                <p><i>Problem after cropping?</i>
+                    <!-- Your answer... --> 
+                </p>
+                <p><i>What would be a better approach?</i>
+                    <!-- Your answer... --> 
+                </p>
+                <p><i>Which colors would you choose?</i>
+                    <!-- Your answer... --> 
+                </p>
+            </li>
+            <svg id="Task1">
+            </svg>
+        </ul>
+    </div>  
+      
+    <div>
+        <h2>Task 2 (5 points)</h2> 
+        <ul>
+            <li><b>a) </b><i>(1/5 points)</i>
+                <p><i>Construct mapping rules?</i>
+                    <!-- Your thoughts... -->
+                </p>
+                <svg id="Task2a" width="165" height="220">
+                    <g id="traffic_light_prototype" transform="translate(10,10)">
+                        <rect x="0" y="0" width="150" height = "200" fill="none" stroke-width="4" stroke="DimGray"/>
+                        <line x1="0" y1="40" x2="150" y2="40" stroke="DimGray" stroke-width="4"/>
+                        <circle class="minValue"cx="20" cy="20"  r="15" fill="green" />
+                        <text class="trafficText" x="40" y="30" >0</text>
+                        <circle class="maxValue" cx="130"cy="20"  r="15" fill="red" />
+                        <text class="trafficText" x="70" y="30" >100</text>
+                        <circle id="currentLimit" cx="75" cy="120" r="70" fill="blue" />
+                        <!-- Your code (or in index.js)... -->
+                    </g>
+                </svg>
+            </li>
+            
+            <li><b>b) </b><i>(2/5 points)</i>
+                <p><i>5 traffic lights</i>
+                    
+                </p>
+                <svg id="Task2b">
+                    <!-- Your code (or in index.js)... -->
+                </svg>
+            </li>
+            
+            <li><b>c) </b><i>(2/5 points)</i>
+                <p><i>Disadvantages of your chosen color mapping?</i>
+                    <!-- Your answer... -->
+                </p>
+                <p><i>Advantages of your chosen color mapping?</i>
+                    <!-- Your answer... -->
+                </p>
+            </li>
+        </ul>
+        
+    </div>
+  </body>
+</html>
