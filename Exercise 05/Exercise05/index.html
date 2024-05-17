@@ -11,7 +11,7 @@
   <body onload="init()">
     <div id="Introduction">
       <h1>Exercise 5: Color Perception</h1>
-      <h4>Contributors: YOUR NAMES</h4>
+      <h4>Contributors: Jian Feng (01/1355020), Sofía Karsaclian (01/1246546)</h4>
     </div>
 
     <div>
@@ -20,22 +20,32 @@
             <li><b>a) </b><i>(3/15 points)</i>
                 <p><i>Problem with JND?</i>
                     <!-- Your answer... --> 
-                </p>
+                    Although JND in CIELAB ensures that the color differences can be perceived by the human eye,
+                    this is also influenced by different features of the visualization, like size, density of elements and surrounding colors.
+                    Also, by definition, JND must be detectable at least half of the time, which could mean there could be
+                    a large proportion of the audience not detecting it.  
+                           </p>
                 <p><i>Consequences?</i>
                     <!-- Your answer... --> 
+                    The consequences of these drawbacks are that the visualization could be misinterpreted or hard for the viewers
+                    to interpret. Important differences may not be noticeble and thus important information may be lost. 
                 </p>
                 <p><i>Solution?</i>
                     <!-- Your answer... --> 
+                    To deal with the consequences, we could complement the color encoding with other cues 
+                    such as size or patterns to make critical differences easily interpretable. We should 
+                    ensure that the color ranges are large enough as to generate better contrast between adjacet colors. 
+                    We could also test the visualization with a sample audience and then improve as needed.
                 </p>
             </li>
             
             <li><b>b) </b><i>(2/15 points)</i>
                 <p><i>Disadvantage of 12-class Set3</i><br>
-                    Firstly, it hard for viewers to grasp the main message of the visualization. 
+                    Firstly, it is hard for viewers to grasp the main message of the visualization. 
                     With so many colors, important information might get lost, and viewers may struggle to identify significant patterns.
                     <br>Secondly, nearby regions that are closely related might appear disjointed due to the dissimilar colors, 
                     hindering viewers' understanding of their connections.
-                    <br>Third, it difficult for viewers to remember and associate each color with its corresponding category or meanings.<!-- Your answer... --> 
+                    <br>Third, it is difficult for viewers to remember and associate each color with its corresponding category or meanings.<!-- Your answer... --> 
                 </p>
             </li>
             <li><b>c) </b><i>(10/15 points)</i>
@@ -65,36 +75,56 @@
             <li><b>a) </b><i>(1/5 points)</i>
                 <p><i>Construct mapping rules?</i>
                     <!-- Your thoughts... -->
-                </p>
+                    The first thought was to choose green for 100 and red for 0, since these colors would be easily associated with 
+                    the light colors (red for stop, green for go). Nevertheless, it is very important that anyone could interpret the 
+                    color, and red-green is problematic for color blind people. Also, it should not be a divergent color scheme, since
+                    the middle value is not neutral, but actually corresponds to a sequential order. That's why we chose a beige and dark red.
+                
+                    We want the differences to be noticeble, so we used the interpolateLab function, which returns a CIELAB color space, 
+                    making it perceptually uniform.
+                                </p>
                 <svg id="Task2a" width="165" height="220">
+
                     <g id="traffic_light_prototype" transform="translate(10,10)">
                         <rect x="0" y="0" width="150" height = "200" fill="none" stroke-width="4" stroke="DimGray"/>
                         <line x1="0" y1="40" x2="150" y2="40" stroke="DimGray" stroke-width="4"/>
-                        <circle class="minValue"cx="20" cy="20"  r="15" fill="green" />
+                        <circle class="minValue"cx="20" cy="20"  r="15" fill="#F3F2C9" />
                         <text class="trafficText" x="40" y="30" >0</text>
                         <circle class="maxValue" cx="130"cy="20"  r="15" fill="red" />
                         <text class="trafficText" x="70" y="30" >100</text>
-                        <circle id="currentLimit" cx="75" cy="120" r="70" fill="blue" />
+                        <circle id="currentLimit" cx="75" cy="120" r="70" fill="#990b13" />
                         <!-- Your code (or in index.js)... -->
                     </g>
                 </svg>
+
             </li>
             
             <li><b>b) </b><i>(2/5 points)</i>
                 <p><i>5 traffic lights</i>
+
                     
                 </p>
-                <svg id="Task2b">
+                <svg id="Task2b" width="835" height="220">
                     <!-- Your code (or in index.js)... -->
                 </svg>
             </li>
             
             <li><b>c) </b><i>(2/5 points)</i>
                 <p><i>Disadvantages of your chosen color mapping?</i>
+                    <br/>  
                     <!-- Your answer... -->
+                    Lighter colors may no be so easily seen in traffic (they do not call the attention so much).
+                    There's no previous associations with the colors and speed.
+                    
+
+            
                 </p>
                 <p><i>Advantages of your chosen color mapping?</i>
+                    <br/>             
                     <!-- Your answer... -->
+                    The scale is easily interpretable and sequential. It's easy for the viewers to remember the 
+                    extreme values.                 
+                     The colors chosen are also color-blind friendly.  
                 </p>
             </li>
         </ul>

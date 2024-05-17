@@ -35,7 +35,7 @@ function init()
     //function extractRGBFromSVG
     let index = 0;
     const circles = svg.selectAll("circle").nodes();
-    
+        
     // Store color data for each circle
     const colors = [];
 
@@ -96,10 +96,48 @@ function init()
     //++Task 2a++
     //+++++++++++
 
+    var SpeedColor = d3.scaleLinear().domain([0,100])
+        .interpolate(d3.interpolateLab) //cielab
+        .range(["#F3F2C9", "red"])
+
+    var targetSpeed= 50;
+    
+    function currentLimit(speed) {
+        var currentLimitCircle= d3.select("#currentLimit");
+        currentLimitCircle.attr("fill", SpeedColor(speed));
+    }
+
+    currentLimit(targetSpeed);
+
+
 
     //+++++++++++
     //++Task 2b++
     //+++++++++++
+
+
+    const RandomNumbers= [83, 25, 63, 4, 48];
+
+    RandomNumbers.forEach((number, index) => {
+        var color = SpeedColor(number);
+    
+        d3.select("#Task2b")
+            .append("g")
+            .attr("transform", `translate(${index * 160 + 10}, 10)`) // put lights next to each other, with space
+            .attr("id", `traffic_light_${index}`)
+            .html(`
+                <rect x="0" y="0" width="150" height="200" fill="none" stroke-width="4" stroke="DimGray"/>
+                <line x1="0" y1="40" x2="150" y2="40" stroke="DimGray" stroke-width="4"/>
+                <circle class="minValue" cx="20" cy="20" r="15" fill="#F3F2C9"/>
+                <text class="trafficText" x="40" y="30">0</text>
+                <circle class="maxValue" cx="130" cy="20" r="15" fill="red"/>
+                <text class="trafficText" x="70" y="30">100</text>
+                <circle class="currentLimit" cx="75" cy="120" r="70" fill="${color}"/>
+                <text class="trafficText" x="60" y="130" fill="white">${number}</text>
+            `);
+    });
+
+    
 }
 
 
