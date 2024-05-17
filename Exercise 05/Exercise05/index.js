@@ -35,13 +35,62 @@ function init()
     //function extractRGBFromSVG
     let index = 0;
     const circles = svg.selectAll("circle").nodes();
+    
+    // Store color data for each circle
+    const colors = [];
+
+    // Extract RGB, and convert to CIELab
+    circles.forEach((circle, index) => {
+        // Extract RGB values
+        const rgb = extractRGBFromSVG(d3.select(circle));
+        console.log(`Circle ${index} RGB:`, rgb);
+
+        //conversion from RGB values to CIELab
+        if (rgb) {
+            // Convert the RGB values to CIELab
+            const lab = rgbToCIELAB(rgb.r, rgb.g, rgb.b);
+            console.log(`Circle ${index} CIELab:`, lab);
+
+            // Store the values 
+            colors.push({ index, rgb, lab });
+        } else {
+            console.log(`Circle ${index} has no valid RGB values.`);
+        }
+    });
+
+    console.log("Stored color data:", colors);
+
     console.log(extractRGBFromSVG(d3.select(circles[index])));
 
-    //conversion from RGB values to CIELab
+
     //function rgbToCIELAB
     console.log(rgbToCIELAB(141, 211, 199));
 
+    // Function to calculate the Euclidean distance between two CIELab colors
+    function calculateColorDifference(lab1, lab2) {
+        return Math.sqrt(
+            Math.pow(lab1.L - lab2.L, 2) +
+            Math.pow(lab1.a - lab2.a, 2) +
+            Math.pow(lab1.b - lab2.b, 2)
+        );
+    }
 
+    // Calculate the change in CIELab values
+    const referenceLab = colors[0].lab; // Using the first circle as the reference
+
+    const colorDifferences = colors.map(color => ({
+        index: color.index,
+        difference: calculateColorDifference(referenceLab, color.lab)
+    }));
+
+    // Sort circles based on the magnitude of their differences
+    colorDifferences.sort((a, b) => a.difference - b.difference);
+
+    // Select the first four circles with the smallest differences
+    const selectedIndices = colorDifferences.slice(0, 4).map(colorDiff => colorDiff.index);
+
+    const selectedColors = selectColorsByIndices(colors, selectedIndices);
+    console.log("Selected circles with the most similar differences in CIELab values:", selectedColors);
 
     //+++++++++++
     //++Task 2a++
