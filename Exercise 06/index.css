@@ -1,0 +1,53 @@
+/* styling for axis labels */
+text.axis-label {
+    font-size: x-small;
+    text-anchor: middle;
+    dominant-baseline: text-after-edge;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+header {
+    display: flex;
+    max-width: 700px;
+    justify-content: space-between;
+  }
+
+div#color-select-legend {
+    display: flex;
+    flex-direction: column;
+}
+
+/* styling for the select tags */
+fieldset {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+div.select-container {
+    display: flex;
+    flex-direction: column;
+}
+
+/* styling for the cells */
+.cell {
+    border: 1px solid #ddd;
+}
+
+/* styling for the axis */
+.axis path, .axis line {
+    display: none;
+}
+
+/* styling for the histogram bars */
+.histogram-bar {
+    fill: steelblue;
+}
+
+/* styling for the correlation text */
+.correlation {
+    text-anchor: middle;
+    alignment-baseline: middle;
+    font-size: 12px;
+    fill: #000;
+}
