@@ -1,3 +1,5 @@
+// TASK 1a
+
 console.log("Data", data);
 
 // constants
@@ -34,7 +36,7 @@ const cell = svg.selectAll(".cell")
     .attr("class", "cell")
     .attr("transform", d => `translate(${columns.indexOf(d[0]) * size},${columns.indexOf(d[1]) * size})`);
 
-// Add scatter plots and histograms
+// Scatter plot matrix
 cell.each(function([xDim, yDim]) {
   const cellGroup = d3.select(this);
 
@@ -67,8 +69,8 @@ cell.each(function([xDim, yDim]) {
           .attr("cy", d => yScales[yDim](d[yDim]))
           .attr("r", 2);
   } else {
-      // Above diagonal: show correlation coefficient
-      const corr = calculateCorrelation(data, xDim, yDim);
+      // Above diagonal: Pearson correlation coefficient
+      const corr = pearsonCorrelation(data, xDim, yDim);
       cellGroup.append("text")
           .attr("class", "correlation")
           .attr("x", size / 2)
@@ -77,17 +79,17 @@ cell.each(function([xDim, yDim]) {
   }
 
   cellGroup.append("rect")
-        .attr("class", "cell-box")
-        .attr("x", padding / 2)
-        .attr("y", padding / 2)
-        .attr("width", size - padding)
-        .attr("height", size - padding)
-        .style("fill", "none")
-        .style("stroke", "#000");
+  .attr("class", "cell-box")
+  .attr("x", padding / 2 - 1) // made them a bit bigger so that the points are not on the line
+  .attr("y", padding / 2 - 1) 
+  .attr("width", size - padding + 2) 
+  .attr("height", size - padding + 2) 
+  .style("fill", "none")
+  .style("stroke", "#000");
 
 });
 
-function calculateCorrelation(data, xDim, yDim) {
+function pearsonCorrelation(data, xDim, yDim) {
     const xMean = d3.mean(data, d => d[xDim]);
     const yMean = d3.mean(data, d => d[yDim]);
     const numerator = d3.sum(data, d => (d[xDim] - xMean) * (d[yDim] - yMean));
@@ -116,8 +118,29 @@ svg.selectAll(".cell")
                 .attr("x", -size / 2)
                 .attr("y", padding / 2 - 10)
                 .attr("dy", ".71em")
-                .style("font-size", "14px") // Adjust the font size
-                .style("font-weight", "bold") // Make the font bold
                 .text(yDim);
         }
     });
+
+
+// TASK 1b
+
+// import data
+d3.csv("import-85.csv").then(function(data2) {
+  data2.forEach(d => {
+      d["engine_size"] = +d[17]; // engine_size
+      d["horsepower"] = d[22] === '?' ? null : +d[22]; // horsepower
+      d["peak_rpm"] = d[23] === '?' ? null : +d[23]; // peak_rpm
+      d["city_mpg"] = +d[24]; // city_mpg
+      d["highway_mpg"] = +d[25]; // highway_mpg
+      d["price"] = d[26] === '?' ? null : +d[26]; // price
+  });
+
+  // Filter out obs with nulls
+  const filteredData = data2.filter(d => 
+      d["engine_size"] !== null && d["horsepower"] !== null && d["peak_rpm"] !== null &&
+      d["city_mpg"] !== null && d["highway_mpg"] !== null && d["price"] !== null
+  );
+
+  console.log(filteredData);
+});

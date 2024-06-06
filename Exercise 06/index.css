@@ -48,6 +48,7 @@ div.select-container {
 .correlation {
     text-anchor: middle;
     alignment-baseline: middle;
-    font-size: 12px;
+    font-size: 14px;
+    font-weight: bold;
     fill: #000;
 }
