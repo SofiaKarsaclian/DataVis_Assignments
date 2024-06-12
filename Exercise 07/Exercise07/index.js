@@ -97,27 +97,32 @@ function create_pcp(dataset, dims){
   var categoricals = dims.filter(d => typeof dataset[0][d] === 'string');
 
   // TASK: remove all (old) elements from the chart svg
-  TODO;
+  chart.selectAll('*').remove();
 
   // TASK: build a y scale for each dimension and store them in the form of a dictionary (hint: numeric dimensions need another scale than categorical dimensions)
   var yScales = {}; // object to store y scales 
-  
-  numerics.TODO;
 
+  numerics.forEach(dim => {
+    yScales[dim] = d3.scaleLinear()
+      .domain(d3.extent(dataset, d => +d[dim]))
+      .range([visHeight, 0]);
+  });
 
-
-  categoricals.TODO;
-
+  categoricals.forEach(dim => {
+    yScales[dim] = d3.scalePoint()
+      .domain(dataset.map(d => d[dim]))
+      .range([visHeight, 0]);
+  });
 
 
   // TASK: build the x scale (hint: each dimension should get a point distributed evenly across the width of the chart svg)
-  var xScale = TODO;
-
-
+  var xScale = d3.scalePoint()
+    .range([0, visWidth])
+    .domain(dims);
 
   // TASK: build color scale for the dimension "species"
-  var colorScale = TODO;
-
+  var colorScale = d3.scaleOrdinal(d3.schemeCategory10)
+    .domain(dataset.map(d => d.species));
 
   // adjust color legend to display species in the respective colors
   d3.select('#legend').selectAll('span')
@@ -128,9 +133,17 @@ function create_pcp(dataset, dims){
     .style('color', d => colorScale(d));
 
   // TASK: draw the axes to the chart svg with respective labels underneath
-  TODO;
+  dims.forEach(dim => {
+    var axis = d3.axisLeft(yScales[dim]);
 
-
+    chart.append("g")
+      .attr("transform", "translate(" + xScale(dim) + ")")
+      .each(function() { d3.select(this).call(axis); })
+      .append("text")
+      .style("text-anchor", "middle")
+      .attr("y", -9)
+      .text(dim);
+  });
 
 
 
@@ -140,12 +153,21 @@ function create_pcp(dataset, dims){
   // TASK: draw the data lines to the chart svg as path elements; 
     //color the data lines according to the species (stroke attribute); 
     //use opacity 0.5 for better readability
-  TODO;
+    function path(d) {
+      return d3.line()(dims.map(function(dim) {
+        return [xScale(dim), yScales[dim](d[dim])];
+      }));
+    }
+  
+    chart.selectAll("path")
+      .data(dataset)
+      .enter().append("path")
+      .attr("d", path)
+      .style("fill", "none")
+      .style("stroke", d => colorScale(d.species))
+      .style("opacity", 0.5);
+}
 
-
-
-
-};
 
 // initialize the plot with the default ordering of dimensions
 create_pcp(cleanData, dimensionsOrder);
