@@ -41,7 +41,7 @@ function spearmanCorrelation(data, xDim, yDim) {
 
 // TASK 1a
 
-const width = 1500;
+const width = 900;
 
 const marginWhole = { top: 30, right: 10, bottom: 10, left: 30 },
     sizeWhole = width - marginWhole.left - marginWhole.right
@@ -101,6 +101,7 @@ for (let i = 0; i < allVar.length; ++i) {
                 .append('g')
                 .attr("transform", `translate(${position(var1) + mar},${position(var2) + mar})`);
 
+            
             // Add x axis
             tmp.append("g")
                 .attr("transform", `translate(0,${size - mar * 2})`)
@@ -133,13 +134,13 @@ for (let i = 0; i < allVar.length; ++i) {
                 .attr("stroke", "white")
         } else if (i < j) {
             // create scatter plot
-            // Add X Scale of each graph
+            // Add x Scale of each graph
             xextent = d3.extent(data, function (d) { return +d[var1] })
             const x = d3.scaleLinear()
                 .domain(xextent).nice()
                 .range([0, size - 2 * mar]);
 
-            // Add Y Scale of each graph
+            // Add y Scale of each graph
             yextent = d3.extent(data, function (d) { return +d[var2] })
             const y = d3.scaleLinear()
                 .domain(yextent).nice()

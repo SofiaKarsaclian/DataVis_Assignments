@@ -17,23 +17,25 @@
 
   </div>
   <svg id="svg1"></svg>
+  <h4>Correlation</h4>
   <div class="switch-container">
-    <span class="switch-label" style="color: #4CA772">Pearson Correlation</span>
+    <span class="switch-label" style="color: #4CA772">Pearson's</span>
     <label class="switch">
       <input type="checkbox" id="correlationSwitch">
       <span class="slider"></span>
     </label>
-    <span class="switch-label" style="color: #2196F3">Spearman Correlation</span>
+    <span class="switch-label" style="color: #2196F3">Spearman's</span>
   </div>
+  <h4>Dimensions order</h4>
   <div class="checkbox-container">
     <label class="checkbox-label">
-      <input type="checkbox" name="option" value="default" id="defaultCheckbox" checked> Default
+      <input type="checkbox" name="option" value="default" id="defaultCheckbox" checked> Default 
     </label>
     <label class="checkbox-label">
-      <input type="checkbox" name="option" value="alphabeta" id="alphabetaCheckbox"> Alphabeta
+      <input type="checkbox" name="option" value="alphabeta" id="alphabetaCheckbox"> Alphabetical 
     </label>
     <label class="checkbox-label">
-      <input type="checkbox" name="option" value="reversed" id="reversedCheckbox"> Reversed
+      <input type="checkbox" name="option" value="reversed" id="reversedCheckbox"> Reversed 
     </label>
   </div>
   <svg id="svg2"></svg>
@@ -46,16 +48,13 @@
       engine_size, city_mpg<br>
       engine_size, highway_mpg<br>
       engine_size, price<br>
-      engine_size, curb_weight<br>
       horsepower, city_mpg<br>
       horsepower, highway_mpg<br>
       horsepower, price<br>
       city_mpg, highway_mpg<br>
       city_mpg, price<br>
-      city_mpg, curb_weight<br>
       highway_mpg, price<br>
-      highway_mpg, curb_weight<br>
-      price, curb_weight<br>
+
     </p>
     <p><i>What elements in the visualizations can help you identify the correlated dimensions?</i><br>
       The scatter plots for dimension pairs, the values of correlation coefficient, change between Pearson correlation
@@ -67,9 +66,10 @@
       Gestalt laws: Proximity, Figure ground<br>
     </p>
     <p><i>What can you say about the data, based on the correlations?</i><br>
-      For this dataset, I find that most of the selected dimensions are highly correlated (|correlation coefficient| >
-      0.5) with some other dimensions. However, the dimension "compression_ratio" does not appear to be correlated with
-      any other selected dimensions.
+      For this dataset, we find that most dimensions are highly correlated. The peak RPM, however, does not correlate with the other variables. 
+      Given it's a cars dataset, its obvious that different aspects will be related: engine size, horsepower, MPG ratings, and price, all seem to be highly correlated.
+      This visualization, however, doesn't allow us to understand the correlations for more than two variables at the time, which is probably the case here.
+
     </p>
   </div>
 

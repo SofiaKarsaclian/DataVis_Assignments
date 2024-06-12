@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8" />
+  <title>Data Vis - Assignment 07</title>
+  <script src="d3.js" charset="utf-8"></script>
+  <link rel="stylesheet" href="index.css" />
+</head>
+<body>
+  <h2>Multivariate Data - Parallel Coordinate Plot</h2>
+  <h4> Jian Feng (01/1355020)<br>
+    Sofía Karsaclian (01/1246546)</h4>
+  <fieldset>
+    <div id ="legend"></div>
+    <div class="select-container">
+      <input type="radio" id="all_dim" name="dimension-select" value="all_dim" checked />
+      <label for="all_dim">display all dimensions as axes</label>
+      <input type="radio" id="numeric" name="dimension-select" value="numerics" />
+      <label for="numerics">display only numeric dimensions as axes</label>
+    </div>
+    <div class="select-container">
+      <label for="ordering-select">Order of dimensions</label>
+      <select id="ordering-select" class="selector"></select>  
+    </div>
+  </fieldset>  
+  <div>
+    <svg id="chart"></svg>
+  </div>
+  <script src="data.js"></script>
+  <script src="index.js"></script>
+</body>
