@@ -21,18 +21,18 @@ document.addEventListener('DOMContentLoaded', function () {
         .range([0, width]);
 
     const y = d3.scaleLinear()
-        .domain([0, d3.max(data, d => d.close)])
+        .domain([d3.min(data, d => d.close), d3.max(data, d => d.close)])
         .range([height, 0]);
 
     const color = d3.scaleOrdinal(d3.schemeCategory10)
         .domain([...new Set(data.map(d => d.Name))]);
 
     svg.append("g")
-        .attr("transform", `translate(0,${height})`)
-        .call(d3.axisBottom(x));
+        .call(d3.axisLeft(y));
 
     svg.append("g")
-        .call(d3.axisLeft(y));
+        .attr("transform", `translate(0,${height})`)
+        .call(d3.axisBottom(x));
 
     // X-axis label
     svg.append("text")
@@ -49,37 +49,37 @@ document.addEventListener('DOMContentLoaded', function () {
         .style("text-anchor", "middle")
         .text("Closing Value");
 
-    const line = d3.line()
-        .x(d => x(d.date))
-        .y(d => y(d.close));
+    // Group data by date and sort by close value descending within each date
+    const nestedData = d3.groups(data, d => d.date).map(([date, values]) => {
+        values.sort((a, b) => b.close - a.close);
+        return [date, values];
+    });
 
-    const categories = [...new Set(data.map(d => d.Name))];
-
-    categories.forEach(category => {
-        const categoryData = data.filter(d => d.Name === category);
-
-        svg.append("path")
-            .datum(categoryData)
-            .attr("fill", "none")
-            .attr("stroke", color(category))
-            .attr("stroke-width", 1.5)
-            .attr("d", line);
+    // Calculate the next biggest close value for areas
+    const updatedData = nestedData.flatMap(([date, values]) => {
+        return values.map((d, i) => ({
+            ...d,
+            y0: i < values.length - 1 ? values[i + 1].close : y.domain()[0]
+        }));
     });
 
     const area = d3.area()
         .x(d => x(d.date))
-        .y0(y(0))
+        .y0(d => y(d.y0)) // the next biggest value
         .y1(d => y(d.close));
 
+    // Draw areas for each category
+    const categories = [...new Set(data.map(d => d.Name))];
     categories.forEach(category => {
-        const categoryData = data.filter(d => d.Name === category);
+        const categoryData = updatedData.filter(d => d.Name === category);
 
         svg.append("path")
             .datum(categoryData)
             .attr("fill", color(category))
-            .attr("opacity", 0.5)
             .attr("d", area);
     });
+
+    // I don't understand where do the white gaps come from
 
     // Legend
     const legend = svg.selectAll(".legend")
@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .attr("x", width + 10)
         .attr("width", 18)
         .attr("height", 18)
-        .style("fill", d => color(d)); // Ensure the fill color matches the category color
+        .style("fill", d => color(d));
 
     legend.append("text")
         .attr("x", width + 34)

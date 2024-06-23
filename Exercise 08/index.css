@@ -9,6 +9,6 @@ svg {
     background-color: #f9f9f9;
 }
 
-svg {
-    shape-rendering: crispEdges;
+.line-path {
+    shape-rendering: crispEdges; 
 }
