@@ -55,31 +55,34 @@ document.addEventListener('DOMContentLoaded', function () {
         return [date, values];
     });
 
-    // Calculate the next biggest close value for areas
-    const updatedData = nestedData.flatMap(([date, values]) => {
-        return values.map((d, i) => ({
-            ...d,
-            y0: i < values.length - 1 ? values[i + 1].close : y.domain()[0]
-        }));
-    });
+    console.log(nestedData)
 
     const area = d3.area()
         .x(d => x(d.date))
-        .y0(d => y(d.y0)) // the next biggest value
+        .y0(d => y.range()[0]) // the next biggest value
         .y1(d => y(d.close));
+    for (let i = 0; i < nestedData.length - 1; ++i) {
+        const sortedDataoOfDay0 = nestedData[i][1];
+        const sortedDataoOfDay1 = nestedData[i + 1][1];
+        const group = svg.append("g");
+        for (let j = 0; j < sortedDataoOfDay1.length; ++j) {
+            let sortedDataoOfDay0Pair;
+            for (let pair of sortedDataoOfDay0) {
+                if (pair.Name === sortedDataoOfDay1[j].Name) {
+                    sortedDataoOfDay0Pair = pair;
+                }
+            }
+            const dataOfTimeGap = [sortedDataoOfDay0Pair, sortedDataoOfDay1[j]];
+            group
+                .append("path")
+                .attr("d", area(dataOfTimeGap))
+                .attr("fill", color(sortedDataoOfDay1[j].Name))
+                .attr("class", "braided-area");
+        }
+    }
 
-    // Draw areas for each category
+
     const categories = [...new Set(data.map(d => d.Name))];
-    categories.forEach(category => {
-        const categoryData = updatedData.filter(d => d.Name === category);
-
-        svg.append("path")
-            .datum(categoryData)
-            .attr("fill", color(category))
-            .attr("d", area);
-    });
-
-    // I don't understand where do the white gaps come from
 
     // Legend
     const legend = svg.selectAll(".legend")
