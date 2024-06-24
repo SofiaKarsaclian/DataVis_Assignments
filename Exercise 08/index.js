@@ -56,6 +56,10 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     console.log(nestedData)
+<<<<<<< HEAD
+=======
+
+>>>>>>> 537e61b7a365ddb616cfb3e43cae914b4311aca8
 
     const area = d3.area()
         .x(d => x(d.date))
