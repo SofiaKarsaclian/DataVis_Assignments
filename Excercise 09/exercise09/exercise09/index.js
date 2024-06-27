@@ -67,7 +67,9 @@ function updateGraph(graphData) {
         //The color of the link should be blue when the value is greater than 0, red when below 0 (0.5/2 points)
         .attr('stroke', d => d.value > 0 ? 'blue' : 'red')
         //If the value is below 0, add a dash-array to the stroke (0.5/2 points)
-        .attr('stroke-dasharray', d => d.value < 0 ? '4 2' : 'none');
+        .attr('stroke-dasharray', d => d.value < 0 ? '4 2' : 'none')
+        // make them less opaque to improve readability
+        .attr('stroke-opacity', 0.5);
 
 
 
@@ -85,7 +87,8 @@ function updateGraph(graphData) {
         //If aggregated, the radius of the circle should scale according to the count (1/3 point)
         .attr('r', d => d.count ? Math.sqrt(d.count) * 5 : 5)
         ///Color the circle according to the categorical colorScale (1/3 points)
-        .attr('fill', d => colorScale(d.house));
+        .attr('fill', d => colorScale(d.house))
+        .attr('fill-opacity', 0.8);
 
     //Add a text label (1/3 points)
     node.append('text')
