@@ -11,8 +11,8 @@
 <body onload="init()">
   <div>
     <h1>Exercise 9: Relational Data</h1>
-    <h4>Contributor 1: NAME</h4>
-    <h4>Contributor 2: NAME</h4>
+    <h4>Contributor 1: Jian Feng</h4>
+    <h4>Contributor 2: Sofía Karsaclian</h4>
   </div>
   <div>
     <h2>Task 1 Node-link Diagram (10 points)</h2>
@@ -36,10 +36,10 @@
               <!-- Your answer... --> 
               <ul>
                 <li>
-                  Ingredients A with Ingredients B
+                  Crunchy & Oat with strawberries
                 </li>
                 <li>
-                  Ingredients A with Ingredients B
+                  Crunchy & Oat with almonds
                 </li>
               </ul>
           </p>
@@ -48,14 +48,24 @@
         <p><i>If we would represent the same data with an adjacency matrix, would the task be simpler to solve? <br/> 
           Explain why or why not?</i>
           <!-- Your answer... --> 
+          <p>The main problem that figure 02 presents for solving the task is the overlapping of the arrows. 
+          The adjacency matrix would fix this problem. We could use a weighted adjacency matrix and rely on 
+          color as a visual variable using a sequential color scheme. We should order them according to their
+          corresponding group so that the most often combinations would be easily visualized.</p>
       </p>
       </li>
       <li><b>c) </b><i>(5/10 points)</i>
         <p><i>Transform the node-link diagram shown in Figure 03 to an adjacency matrix. (2/5) </i>
           <!-- Insert the adjacency matrix here... --> 
+          <img src="adjmatrix.png">
       </p>
       <p><i>How many patterns can be found? Name and explain those patterns. (3/5) </i>
           <!-- Your answer... -->  
+          <p>-	Node clique (without self link) – the last 5 nodes (G2 to B8) form a set in which all the nodes within are connected to each other. <br/>
+          -	Hub nodes: are highly connected nodes that play a significant role in the network’s structure. The two green nodes (G1 and G2 in the adjacency matrix) present dense rows and columns.<br/>
+          The patterns are affected according to the ordering of the nodes in the matrix. The clique could potentially not be identified, and new patters may arise, such as stairs or paths.</p> 
+          
+           
       </p>
       </li>
       <li><b>d) </b><i>(3/10 points)</i>
@@ -66,6 +76,9 @@
           Explain your choice.
         </i>
           <!-- Your answer... --> 
+          <p>We would choose to visualize it though a node-link diagram, since they are better to identify node topologies, 
+          and 100 nodes would still be a reasonable size so that the visualization is straightforward. The node-link diagram
+          is a more intuitive representation to the connections between people and its easier to trace paths. </p>
       </p>
       </li>
   </ul>

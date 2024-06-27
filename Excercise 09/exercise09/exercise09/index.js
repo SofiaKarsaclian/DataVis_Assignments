@@ -12,7 +12,9 @@ const margin = {
 //--TASK 1--(1 point)
 //++++++++++++++++++
 //Define a categorical color scale to color the different nodes according to their house.
-const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
+const colorScale = d3.scaleOrdinal()
+            .domain(['Gryffindor', 'Hufflepuff', 'Ravenclaw', 'Slytherin', 'No House'])
+            .range(['#740001', '#ecb939', '#222f5b', '#2a623d', 'gray']); 
 
 //Initialize the components
 function init() {
