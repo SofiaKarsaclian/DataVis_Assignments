@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 /* styling for the tooltip */
 div.own-tooltip {
@@ -11,4 +12,19 @@ div.own-tooltip {
     padding: 1px;
     pointer-events: none;
     font-size: 12px;
+=======
+
+/* styling for the tooltip */
+div.own-tooltip {
+    display: none; 
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #ffffffb2;
+    border: 1px solid gray;
+    border-radius: 4px;
+    padding: 1px;
+    pointer-events: none;
+    font-size: 12px;
+>>>>>>> ad949cd413ec498f87e58a5b0536e6f9f9d27a0d
 }
